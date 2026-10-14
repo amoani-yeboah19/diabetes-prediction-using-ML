@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Tool | DiaPredict</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="app-page">
+    <div class="container">
+        <header class="tool-header">
+            <a class="back-link" href="/">← Back to project overview</a>
+            <h1>Diabetes Risk Prediction</h1>
+            <p class="subtitle">Enter patient health parameters to estimate diabetes risk.</p>
+        </header>
+
+        <form method="POST" action="/predict">
+            <div class="model-select-section">
+                <label for="model"><strong>Select Model:</strong></label>
+                <select name="model" id="model">
+                    {% for m in model_names %}
+                    <option value="{{ m }}" {% if selected_model == m %}selected{% endif %}>{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="fields-grid">
+                {% set labels = {
+                    'Pregnancies': 'Pregnancies',
+                    'Glucose': 'Glucose (mg/dL)',
+                    'BloodPressure': 'Blood Pressure (mmHg)',
+                    'SkinThickness': 'Skin Thickness (mm)',
+                    'Insulin': 'Insulin (μU/mL)',
+                    'BMI': 'BMI (kg/m²)',
+                    'DiabetesPedigreeFunction': 'Diabetes Pedigree Function',
+                    'Age': 'Age (years)'
+                } %}
+                {% set placeholders = {
+                    'Pregnancies': '0–17',
+                    'Glucose': '0–200',
+                    'BloodPressure': '0–122',
+                    'SkinThickness': '0–99',
+                    'Insulin': '0–846',
+                    'BMI': '0–67',
+                    'DiabetesPedigreeFunction': '0.078–2.42',
+                    'Age': '21–81'
+                } %}
+                {% for field in feature_names %}
+                <div class="field-group">
+                    <label for="{{ field }}">{{ labels[field] }}</label>
+                    <input
+                        type="number"
+                        step="any"
+                        id="{{ field }}"
+                        name="{{ field }}"
+                        placeholder="{{ placeholders[field] }}"
+                        value="{{ form_values.get(field, '') }}"
+                        required
+                    >
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if error %}
+            <div class="error-box">{{ error }}</div>
+            {% endif %}
+
+            <button type="submit" class="predict-btn">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result-box {{ 'diabetic' if prediction == 'Diabetic' else 'not-diabetic' }}">
+            <h2>Prediction Result</h2>
+            <p class="result-label">{{ prediction }}</p>
+            <p class="result-prob">Diabetes probability: <strong>{{ probability }}%</strong></p>
+            <p class="result-model">Model used: <em>{{ selected_model }}</em></p>
+            {% if prediction == 'Diabetic' %}
+            <p class="advice">⚠ Please consult a medical professional for a proper diagnosis.</p>
+            {% else %}
+            <p class="advice">✓ Low risk detected. Maintain a healthy lifestyle.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <footer>
+            <p>Final Year Project &mdash; Diabetes Prediction Using Machine Learning</p>
+        </footer>
+    </div>
+</body>
+</html>

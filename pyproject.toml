@@ -1,0 +1,13 @@
+[project]
+name = "diabetes-prediction-system"
+version = "1.0.0"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "flask==3.0.3",
+    "joblib==1.4.2",
+    "numpy==1.26.4",
+    "scikit-learn==1.8.0",
+]
+
+[tool.vercel]
+entrypoint = "app.app:app"

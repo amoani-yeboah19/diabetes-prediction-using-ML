@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "docx": "^9.7.1"
+  },
+  "name": "diabetes-prediction-report",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional Word report generator for the diabetes prediction project",
+  "scripts": {
+    "report": "node generate_report.js"
+  }
+}

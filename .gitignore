@@ -1,0 +1,25 @@
+# Local environments and dependencies
+.venv/
+venv/
+node_modules/
+
+# Python caches and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor, deployment, and machine-specific files
+.DS_Store
+.claude/
+.vercel/
+.idea/
+.vscode/
+
+# Secrets and generated reports
+.env
+.env.*
+!.env.example
+*.log
+Diabetes_Project_Report.docx

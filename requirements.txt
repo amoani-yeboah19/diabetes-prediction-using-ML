@@ -1,0 +1,5 @@
+numpy==1.26.4
+# Must match the version used to serialize models/*.pkl.
+scikit-learn==1.8.0
+flask==3.0.3
+joblib==1.4.2
